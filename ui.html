@@ -1,0 +1,153 @@
+<style>
+  input[type='text'] {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  label {
+    display: block;
+
+    font: 1em sans-serif;
+  }
+
+  textarea {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    resize: vertical;
+    margin-top: 12px;
+  }
+  button {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .flexitems {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .button {
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #000;
+    background-color: rgb(66, 240, 66);
+    transition: all 0.1s ease-in-out;
+    margin-top: 24px;
+  }
+
+  .button:hover {
+    background-color: rgb(66, 240, 66, 0.8);
+  }
+
+  .switch {
+    margin-top: 24px;
+  }
+
+  .radio {
+    margin-top: 24px;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-top: 12px;
+    margin-bottom: 24px;
+    text-align: center;
+    font-family: sans-serif;
+  }
+
+  .container {
+    padding: 2rem;
+  }
+</style>
+
+<h1>Post Card Plugin</h1>
+
+<div class="container">
+  <label for="Username">Username</label>
+  <input type="text" class="input__field" id="Username" />
+  <label for="name">Name</label>
+  <input type="text" class="input__field" id="name" />
+  <label for="description">Description</label>
+  <textarea
+    class="textarea"
+    type="textarea"
+    id="description"
+    rows="2"
+  ></textarea>
+
+  <div class="switch flexitems">
+    <input class="switch__toggle" type="checkbox" id="dark-mode-on" />
+    <label for="switch_label">Dark Mode</label>
+  </div>
+
+  <div class="radio flexitems">
+    <input
+      class="radio__button"
+      type="radio"
+      id="radio-1"
+      name="variantGroup"
+      value="1"
+    />
+    <label class="radio__label" for="radio-1">No Image</label>
+    <input
+      class="radio__input"
+      type="radio"
+      id="radio-2"
+      name="variantGroup"
+      value="2"
+    />
+    <label class="radio__label" for="radio-2">Single Image</label>
+    <input
+      class="radio__input"
+      type="radio"
+      id="radio-3"
+      name="variantGroup"
+      value="3"
+    />
+    <label class="radio__label" for="radio-3">Carousel</label>
+  </div>
+
+  <div>
+    <button class="button button--primary" id="submit-post">Submit</button>
+  </div>
+</div>
+
+<script>
+  document.getElementById('submit-post').onclick = () => {
+    const username = document.getElementById('Username').value;
+    const name = document.getElementById('name').value;
+    const description = document.getElementById('description').value;
+    const darkModeOn = document.getElementById('dark-mode-on').checked;
+    const imageVariant = document.querySelector(
+      'input[name="variantGroup"]:checked'
+    )?.value;
+
+    const data = {
+      username,
+      name,
+      description,
+      darkModeOn,
+      imageVariant,
+    };
+
+    parent.postMessage({ pluginMessage: { ...data } }, '*');
+  };
+</script>
